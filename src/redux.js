@@ -58,20 +58,20 @@ export default function (state = initialState, action) {
         objectLyrics.verses[verseIndex].lines[lineIndex][bitIndex].chord = state.chordInput
       } else {
         // The chord is in the middle of a bit. We have to split the bit.
+        let line = objectLyrics.verses[verseIndex].lines[lineIndex]
         objectLyrics.verses[verseIndex].lines[lineIndex] = [
-          ...objectLyrics.verses[verseIndex].lines[lineIndex].slice(0, bitIndex),
+          ...line.slice(0, bitIndex),
           {
-            chord: objectLyrics.verses[verseIndex].lines[lineIndex][bitIndex].chord,
-            text: objectLyrics.verses[verseIndex].lines[lineIndex][bitIndex].text.slice(0, charIndex)
+            chord: line[bitIndex].chord,
+            text: line[bitIndex].text.slice(0, charIndex)
           },
           {
             chord: state.chordInput,
-            text: objectLyrics.verses[verseIndex].lines[lineIndex][bitIndex].text.slice(charIndex)
+            text: line[bitIndex].text.slice(charIndex)
           },
-          ...objectLyrics.verses[verseIndex].lines[lineIndex].slice(bitIndex + 1)
+          ...line.slice(bitIndex + 1)
         ]
       }
-      console.log(ChordsFormat.stringify(objectLyrics))
       return {
         ...state,
         objectLyrics,

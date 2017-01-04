@@ -34,7 +34,7 @@ class ChordEditPanel extends React.Component {
 
   render () {
     return (
-      <div>
+      <div className="ChordEditPanel-root">
         {this.props.objectLyrics.verses.map((verse, verseIndex) => (
           <div className='verse' key={verse.name}>
             <h3>{verse.name}</h3>
