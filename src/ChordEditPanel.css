@@ -1,0 +1,35 @@
+.lines {
+  font-size: 1.5em;
+}
+
+.line {
+  line-height: 2.5;
+  font-family: Roboto Slab;
+}
+
+.bit {
+  position:relative;
+}
+
+.chord {
+  position: absolute;
+  top: -1.5em;
+  left: 0;
+  font-size: 92%;
+  font-weight: 900;
+  font-family: Patrick Hand;
+  color: #3F51B5;
+}
+
+.char {
+  border-radius: 1em;
+}
+
+.char:hover {
+  background-color: #bbb;
+  cursor: pointer;
+}
+
+.char.selected {
+  background-color: #90CAF9;
+}
