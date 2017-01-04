@@ -1,6 +1,27 @@
 import ChordsFormat from 'chords-format'
 import _ from 'lodash'
 
+export const UPDATE_TEXTAREA = 'UPDATE_TEXTAREA'
+export const SELECT_CHAR = 'SELECT_CHAR'
+export const UPDATE_CHORD_INPUT = 'UPDATE_CHORD_INPUT'
+export const ADD_CHORD = 'ADD_CHORD'
+
+export const actionCreators = {
+  updateTextarea: (value) => ({type: UPDATE_TEXTAREA, value}),
+  selectChar: (verseIndex, lineIndex, bitIndex, charIndex) => ({
+    type: SELECT_CHAR,
+    selectedChar: {
+      verseIndex,
+      lineIndex,
+      bitIndex,
+      charIndex
+    }
+  }),
+  updateChordInput: (value) => ({type: UPDATE_CHORD_INPUT, value}),
+  addChord: () => ({type: ADD_CHORD})
+}
+
+const chordsFormat = new ChordsFormat()
 const initialState = {
   objectLyrics: {
     verses: []
@@ -11,9 +32,6 @@ const initialState = {
   selectedChar: null,
   chordInput: ''
 }
-
-const chordsFormat = new ChordsFormat()
-
 export default function (state = initialState, action) {
   switch (action.type) {
     case 'UPDATE_TEXTAREA':

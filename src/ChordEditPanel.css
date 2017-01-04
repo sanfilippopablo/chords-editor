@@ -39,3 +39,8 @@
 .char.selected {
   background-color: #90CAF9;
 }
+
+.chord-input-wrapper {
+  position: absolute;
+  top: -1.5em;
+}

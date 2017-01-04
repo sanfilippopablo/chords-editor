@@ -1,29 +1,18 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import cn from 'classnames'
+import { bindActionCreators } from 'redux'
+import { actionCreators } from './redux'
+import ChordInput from './components/ChordInput'
 
 import './ChordEditPanel.css'
 
 class ChordEditPanel extends React.Component {
   constructor () {
     super()
-    this.selectChar = this.selectChar.bind(this)
     this.isSelectedChar = this.isSelectedChar.bind(this)
   }
 
-  selectChar (verseIndex, lineIndex, bitIndex, charIndex) {
-    this.props.dispatch({
-      type: 'SELECT_CHAR',
-      selectedChar: {
-        verseIndex,
-        lineIndex,
-        bitIndex,
-        charIndex
-      }
-    })
-  }
-
-  isSelectedChar (verseIndex, lineIndex, bitIndex,  charIndex) {
+  isSelectedChar (verseIndex, lineIndex, bitIndex, charIndex) {
     const { selectedChar } = this.props
     if (!selectedChar) return false
     return verseIndex === selectedChar.verseIndex
@@ -44,13 +33,28 @@ class ChordEditPanel extends React.Component {
                   {line.map((bit, bitIndex) => (
                     <span className='bit' key={bitIndex}>
                       <span className='chord'>{bit.chord}</span>
-                      {bit.text.split('').map((char, charIndex) => (
-                        <span
-                          className={cn('char', {'selected': this.isSelectedChar(verseIndex, lineIndex, bitIndex, charIndex)})}
-                          key={charIndex}
-                          onClick={() => this.selectChar(verseIndex, lineIndex, bitIndex, charIndex)}
-                        >{char}</span>
-                        ))}
+                      {bit.text.split('').map((char, charIndex) => {
+                        if (this.isSelectedChar(verseIndex, lineIndex, bitIndex, charIndex)) {
+                          return (
+                            <span className='char selected' key={charIndex}>
+                              <span className='chord-input-wrapper'>
+                                <ChordInput />
+                              </span>
+                              <span>
+                                {char}
+                              </span>
+                            </span>
+                          )
+                        } else {
+                          return (
+                            <span
+                              className='char'
+                              key={charIndex}
+                              onClick={() => this.props.selectChar(verseIndex, lineIndex, bitIndex, charIndex)}
+                            >{char}</span>
+                          )
+                        }
+                      })}
                     </span>
                   ))}
                 </div>
@@ -64,5 +68,6 @@ class ChordEditPanel extends React.Component {
 }
 
 export default connect(
-  (state) => state
+  (state) => state,
+  dispatch => bindActionCreators(actionCreators, dispatch)
 )(ChordEditPanel)

@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import ChordInput from './components/ChordInput'
+import { bindActionCreators } from 'redux'
+import { actionCreators } from './redux'
 import './TextInputPanel.css'
 
 class TextInputPanel extends React.Component {
@@ -10,10 +11,7 @@ class TextInputPanel extends React.Component {
   }
 
   handleChange (e) {
-    this.props.dispatch({
-      type: 'UPDATE_TEXTAREA',
-      value: e.target.value
-    })
+    this.props.updateTextarea(e.target.value)
   }
 
   render () {
@@ -26,12 +24,12 @@ class TextInputPanel extends React.Component {
         />
         <div>In sync: {this.props.sync}</div>
         <div>Error: {this.props.error ? this.props.error.message : 'No error'}</div>
-        <ChordInput />
       </div>
     )
   }
 }
 
 export default connect(
-  (state) => state
+  (state) => state,
+  (dispatch) => bindActionCreators(actionCreators, dispatch)
 )(TextInputPanel)
