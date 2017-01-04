@@ -1,4 +1,4 @@
-import ChordsFormat from './ChordsFormat'
+import ChordsFormat from 'chords-format'
 import _ from 'lodash'
 
 const initialState = {
@@ -12,6 +12,8 @@ const initialState = {
   chordInput: ''
 }
 
+const chordsFormat = new ChordsFormat()
+
 export default function (state = initialState, action) {
   switch (action.type) {
     case 'UPDATE_TEXTAREA':
@@ -19,7 +21,7 @@ export default function (state = initialState, action) {
         return {
           ...state,
           textareaLyrics: action.value,
-          objectLyrics: ChordsFormat.parse(action.value),
+          objectLyrics: chordsFormat.parse(action.value),
           sync: true,
           error: null
         }
@@ -75,7 +77,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
         objectLyrics,
-        textareaLyrics: ChordsFormat.stringify(objectLyrics),
+        textareaLyrics: chordsFormat.stringify(objectLyrics),
         selectedChar: null,
         chordInput: ''
       }
